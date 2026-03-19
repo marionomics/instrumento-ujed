@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Instrumento Pedagógico — Academia de Economía FECA-UJED</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg: #ffffff;
+    --bg2: #f7f6f3;
+    --bg3: #f0efe9;
+    --text: #1a1917;
+    --text2: #6b6a65;
+    --text3: #9c9b96;
+    --border: rgba(0,0,0,0.1);
+    --border2: rgba(0,0,0,0.18);
+    --radius: 10px;
+    --radius-sm: 6px;
+    --blue-bg: #e6f1fb; --blue-text: #0c447c;
+    --purple-bg: #eeedfe; --purple-text: #3c3489;
+    --teal-bg: #e1f5ee; --teal-text: #085041;
+    --amber-bg: #faeeda; --amber-text: #633806;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #1c1b18; --bg2: #242320; --bg3: #2e2d29;
+      --text: #f0efe9; --text2: #a09f99; --text3: #6b6a65;
+      --border: rgba(255,255,255,0.08); --border2: rgba(255,255,255,0.15);
+      --blue-bg: #0c447c; --blue-text: #b5d4f4;
+      --purple-bg: #3c3489; --purple-text: #cecbf6;
+      --teal-bg: #085041; --teal-text: #9fe1cb;
+      --amber-bg: #633806; --amber-text: #fac775;
+    }
+  }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif; background: var(--bg3); color: var(--text); min-height: 100vh; }
+  .page { max-width: 720px; margin: 0 auto; padding: 2rem 1rem 4rem; }
+  .logo-bar { display: flex; align-items: center; gap: 12px; margin-bottom: 2rem; padding-bottom: 1.5rem; border-bottom: 0.5px solid var(--border); }
+  .logo-pill { font-size: 11px; font-weight: 600; letter-spacing: 0.08em; color: var(--blue-text); background: var(--blue-bg); padding: 4px 10px; border-radius: 20px; }
+  .logo-title { font-size: 13px; color: var(--text2); }
+  h1 { font-size: 22px; font-weight: 600; color: var(--text); line-height: 1.3; margin-bottom: 8px; }
+  .intro { font-size: 14px; color: var(--text2); line-height: 1.65; margin-bottom: 2rem; padding: 1rem 1.25rem; background: var(--bg2); border-radius: var(--radius); border: 0.5px solid var(--border); }
+  .intro strong { color: var(--text); }
+  .tabs { display: flex; gap: 6px; margin-bottom: 1.5rem; flex-wrap: wrap; }
+  .tab { font-size: 13px; padding: 7px 16px; border-radius: 20px; border: 0.5px solid var(--border2); background: var(--bg); color: var(--text2); cursor: pointer; transition: all 0.15s; font-family: inherit; }
+  .tab:hover { background: var(--bg2); }
+  .tab.active { background: var(--blue-bg); color: var(--blue-text); border-color: transparent; font-weight: 500; }
+  .panel { display: none; }
+  .panel.active { display: block; }
+  .section-label { font-size: 11px; font-weight: 600; letter-spacing: 0.07em; color: var(--text3); text-transform: uppercase; margin-bottom: 0.75rem; margin-top: 1.5rem; }
+  .card { background: var(--bg); border: 0.5px solid var(--border); border-radius: var(--radius); padding: 1rem 1.25rem; margin-bottom: 10px; }
+  .tag { display: inline-block; font-size: 11px; font-weight: 500; padding: 2px 8px; border-radius: 4px; margin-bottom: 8px; }
+  .tag-R { background: var(--purple-bg); color: var(--purple-text); }
+  .tag-C { background: var(--blue-bg); color: var(--blue-text); }
+  .tag-SC { background: var(--teal-bg); color: var(--teal-text); }
+  .tag-SI { background: var(--amber-bg); color: var(--amber-text); }
+  .q-text { font-size: 14px; color: var(--text); line-height: 1.55; margin-bottom: 6px; }
+  .q-sub { font-size: 12px; color: var(--text3); font-style: italic; margin-bottom: 10px; line-height: 1.45; }
+  .scale-row { display: flex; align-items: center; gap: 10px; }
+  .scale-lbl { font-size: 11px; color: var(--text3); white-space: nowrap; }
+  input[type=range] { flex: 1; height: 4px; cursor: pointer; accent-color: #378add; }
+  .scale-num { font-size: 14px; font-weight: 600; min-width: 26px; text-align: center; color: var(--text); }
+  .results-block { background: var(--bg2); border-radius: var(--radius); padding: 1.25rem; margin-bottom: 1rem; }
+  .results-block h3 { font-size: 14px; font-weight: 600; color: var(--text); margin-bottom: 1rem; }
+  .r-row { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+  .r-name { font-size: 13px; color: var(--text2); min-width: 112px; }
+  .r-bar-wrap { flex: 1; height: 8px; background: var(--bg3); border-radius: 4px; overflow: hidden; }
+  .r-bar { height: 100%; border-radius: 4px; transition: width 0.35s ease; }
+  .r-score { font-size: 13px; font-weight: 600; min-width: 32px; text-align: right; color: var(--text); }
+  .winner-badge { display: inline-block; font-size: 12px; font-weight: 500; padding: 4px 12px; border-radius: 20px; margin-top: 8px; }
+  .output-section { margin-top: 1.5rem; }
+  .output-label { font-size: 12px; color: var(--text2); margin-bottom: 6px; }
+  .output-box { font-size: 12px; font-family: 'SF Mono', 'Fira Code', monospace; background: var(--bg); border: 0.5px solid var(--border); border-radius: var(--radius-sm); padding: 14px; white-space: pre; line-height: 1.7; overflow-x: auto; color: var(--text2); }
+  .btn { font-size: 13px; padding: 8px 20px; border-radius: var(--radius-sm); border: 0.5px solid var(--border2); background: var(--bg); color: var(--text); cursor: pointer; font-family: inherit; margin-top: 10px; transition: background 0.12s; }
+  .btn:hover { background: var(--bg2); }
+  .btn-primary { background: var(--blue-bg); color: var(--blue-text); border-color: transparent; font-weight: 500; }
+  .btn-primary:hover { opacity: 0.85; }
+  .progress-bar { height: 3px; background: var(--bg3); border-radius: 2px; margin-bottom: 1.5rem; overflow: hidden; }
+  .progress-fill { height: 100%; background: #378add; border-radius: 2px; transition: width 0.3s; }
+  .divider { height: 0.5px; background: var(--border); margin: 1.5rem 0; }
+  .hint { font-size: 13px; color: var(--text3); line-height: 1.55; padding: 10px 14px; background: var(--bg2); border-radius: var(--radius-sm); border-left: 3px solid #378add; margin-bottom: 1rem; }
+  @media (max-width: 500px) {
+    h1 { font-size: 18px; }
+    .card { padding: 0.85rem 1rem; }
+    .r-name { min-width: 90px; font-size: 12px; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="logo-bar">
+    <span class="logo-pill">FECA · UJED</span>
+    <span class="logo-title">Reingeniería del Modelo Educativo 2026</span>
+  </div>
+  <h1>Instrumento de evaluación pedagógica</h1>
+  <div class="intro">
+    Responde con base en lo que <strong>realmente haces en clase</strong>, no en lo que te gustaría hacer ni en lo que crees que es correcto. No hay respuestas buenas ni malas — el instrumento sirve para identificar el enfoque que ya usas y el que considerarías más pertinente.<br><br>
+    Escala: <strong>0 = nunca ocurre</strong> · <strong>10 = ocurre siempre</strong>. Al terminar copia el bloque de resultados y mándalo al coordinador.
+  </div>
+
+  <div class="progress-bar"><div class="progress-fill" id="progress" style="width:0%"></div></div>
+
+  <div class="tabs">
+    <button class="tab active" onclick="showTab('t1',this)">Tabla 1 · Práctica actual</button>
+    <button class="tab" onclick="showTab('t2',this)">Tabla 2 · Pertinencia</button>
+    <button class="tab" onclick="showTab('res',this)">Resultados y valores</button>
+  </div>
+
+  <div id="t1" class="panel active">
+    <div class="hint">Piensa en tus clases de los <strong>últimos dos meses</strong>. Mueve el deslizador a donde esté tu práctica real, no tu práctica ideal.</div>
+    <div id="q-docente"></div>
+    <div id="q-estudiante"></div>
+    <div id="q-metodo"></div>
+    <div id="q-eval"></div>
+  </div>
+
+  <div id="t2" class="panel">
+    <div class="hint">Ahora piensa en lo que <strong>debería ocurrir</strong> en tus materias, dado el perfil de tus alumnos y los objetivos de la carrera. No en lo que ya haces.</div>
+    <div id="q-pertinencia"></div>
+  </div>
+
+  <div id="res" class="panel">
+    <div class="results-block">
+      <h3>Tabla 1 · Enfoque predominante en tu práctica actual</h3>
+      <div id="r1"></div>
+    </div>
+    <div class="results-block">
+      <h3>Tabla 2 · Enfoque más pertinente según tu criterio</h3>
+      <div id="r2"></div>
+    </div>
+    <div class="divider"></div>
+    <div class="output-section">
+      <div class="output-label">Copia este bloque y mándalo al coordinador de la academia:</div>
+      <div class="output-box" id="output"></div>
+      <button class="btn btn-primary" onclick="copyOut(this)">Copiar resultados</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const QT1 = [
+  {dim:"Rol del docente",e:"R",id:"d1",text:"Piensa en tu última clase. ¿Cuántas veces lanzaste una pregunta abierta y esperaste que el alumno llegara a su propia conclusión, sin corregirla aunque fuera distinta a la tuya?",sub:"0 = nunca ocurrió · 10 = ocurrió en casi toda la clase"},
+  {dim:"Rol del docente",e:"R",id:"d2",text:"Cuando un alumno da una respuesta inesperada, ¿con qué frecuencia la dejas en pie y la usas como punto de partida en lugar de reencauzarla hacia la 'respuesta correcta'?",sub:""},
+  {dim:"Rol del docente",e:"R",id:"d3",text:"¿Con qué frecuencia termina tu clase sin que hayas dado una conclusión cerrada, dejando que cada alumno construya la suya?",sub:""},
+  {dim:"Rol del docente",e:"C",id:"d4",text:"¿Con qué frecuencia diseñas tus actividades de forma que la siguiente es deliberadamente más difícil que la anterior?",sub:""},
+  {dim:"Rol del docente",e:"C",id:"d5",text:"Cuando introduces un concepto nuevo (elasticidad, valor esperado, etc.), ¿con qué frecuencia primero presentas un problema que los alumnos no saben resolver, y solo después explicas la herramienta?",sub:"Esto es lo opuesto a explicar la fórmula y luego aplicarla"},
+  {dim:"Rol del docente",e:"C",id:"d6",text:"¿Con qué frecuencia detectas que el grupo ya domina algo y ajustas la clase en tiempo real para no repetir contenido que ya saben?",sub:""},
+  {dim:"Rol del docente",e:"SC",id:"d7",text:"¿Cuántas veces resuelves un problema frente al grupo pensando en voz alta, para que vean tu proceso antes de pedirles que lo hagan?",sub:"0 = nunca · 10 = casi todas las sesiones"},
+  {dim:"Rol del docente",e:"SC",id:"d8",text:"¿Con qué frecuencia organizas que un alumno más avanzado apoye a uno con más dificultades, y haces seguimiento de ese par?",sub:""},
+  {dim:"Rol del docente",e:"SC",id:"d9",text:"¿Con qué frecuencia usas terminología técnica propia del campo desde la primera sesión en lugar de simplificarla para 'después'?",sub:""},
+  {dim:"Rol del docente",e:"SI",id:"d10",text:"¿Con qué frecuencia el producto final de un equipo en tu clase tiene un destinatario real fuera del salón (empresa, institución, comunidad)?",sub:"0 = el trabajo solo se entrega a ti · 10 = siempre hay un receptor real"},
+  {dim:"Rol del docente",e:"SI",id:"d11",text:"¿Con qué frecuencia los alumnos debaten entre ellos y llegan a un acuerdo colectivo que tú no diriges?",sub:""},
+  {dim:"Rol del docente",e:"SI",id:"d12",text:"¿Con qué frecuencia los alumnos trabajan en proyectos que conectan directamente con un problema económico real de la región o del país?",sub:""},
+  {dim:"Rol del estudiante",e:"R",id:"e1",text:"¿Con qué frecuencia un alumno llega a una solución que tú no habías anticipado y que es igualmente válida?",sub:"Si esto nunca pasa, puede que la tarea no deje espacio para exploración personal"},
+  {dim:"Rol del estudiante",e:"R",id:"e2",text:"¿Con qué frecuencia pides a los alumnos que justifiquen su respuesta con su propia lógica, no solo con la del libro?",sub:""},
+  {dim:"Rol del estudiante",e:"R",id:"e3",text:"¿Cuántas veces al semestre el alumno decide el tema, la pregunta o el enfoque de un trabajo importante?",sub:""},
+  {dim:"Rol del estudiante",e:"C",id:"e4",text:"¿Con qué frecuencia tus alumnos siguen una secuencia de ejercicios donde cada uno requiere lo aprendido en el anterior?",sub:""},
+  {dim:"Rol del estudiante",e:"C",id:"e5",text:"¿Con qué frecuencia los alumnos buscan evidencia o datos por su cuenta para resolver un problema, en lugar de usar los que tú les proporcionaste?",sub:""},
+  {dim:"Rol del estudiante",e:"C",id:"e6",text:"¿Con qué frecuencia los alumnos explican su razonamiento paso a paso antes de dar su respuesta final?",sub:""},
+  {dim:"Rol del estudiante",e:"SC",id:"e7",text:"¿Con qué frecuencia los alumnos aprenden algo nuevo porque un compañero se los enseñó, no tú?",sub:""},
+  {dim:"Rol del estudiante",e:"SC",id:"e8",text:"¿Con qué frecuencia los alumnos usan vocabulario técnico correcto cuando hablan entre ellos, no solo cuando te hablan a ti?",sub:""},
+  {dim:"Rol del estudiante",e:"SC",id:"e9",text:"¿Con qué frecuencia los alumnos ajustan su respuesta después de recibir retroalimentación de ti o de un par?",sub:""},
+  {dim:"Rol del estudiante",e:"SI",id:"e10",text:"¿Con qué frecuencia los alumnos trabajan en equipo en un producto colectivo donde cada integrante tuvo un rol diferente y definido?",sub:""},
+  {dim:"Rol del estudiante",e:"SI",id:"e11",text:"¿Con qué frecuencia los alumnos presentan su trabajo ante personas fuera de su propio equipo (clase completa, panel, empresa)?",sub:""},
+  {dim:"Rol del estudiante",e:"SI",id:"e12",text:"¿Con qué frecuencia los alumnos modifican una idea inicial porque el grupo los convenció con un argumento mejor?",sub:""},
+  {dim:"Metodologías didácticas",e:"R",id:"m1",text:"¿Con qué frecuencia pides un diario de aprendizaje, bitácora o portafolio reflexivo donde el alumno documente cómo cambió su forma de pensar?",sub:""},
+  {dim:"Metodologías didácticas",e:"R",id:"m2",text:"¿Con qué frecuencia una actividad importante de tu clase no tiene una respuesta única correcta?",sub:""},
+  {dim:"Metodologías didácticas",e:"C",id:"m3",text:"¿Con qué frecuencia usas casos o problemas reales como punto de entrada de un tema nuevo, antes de explicar la teoría?",sub:""},
+  {dim:"Metodologías didácticas",e:"C",id:"m4",text:"¿Con qué frecuencia haces que los alumnos mapeen conceptos (mapa conceptual, diagrama, esquema) para mostrar relaciones entre ideas?",sub:""},
+  {dim:"Metodologías didácticas",e:"SC",id:"m5",text:"¿Con qué frecuencia haces demostraciones guiadas donde primero tú resuelves, luego el alumno resuelve contigo, y al final resuelve solo?",sub:"Ciclo: yo hago — hacemos juntos — tú haces"},
+  {dim:"Metodologías didácticas",e:"SC",id:"m6",text:"¿Con qué frecuencia los alumnos hacen prácticas en entornos reales (empresa, institución, laboratorio, campo)?",sub:""},
+  {dim:"Metodologías didácticas",e:"SI",id:"m7",text:"¿Con qué frecuencia el resultado de un proyecto estudiantil beneficia a alguien fuera del salón de clases?",sub:""},
+  {dim:"Metodologías didácticas",e:"SI",id:"m8",text:"¿Con qué frecuencia los alumnos colaboran con personas de otra carrera, otra institución o del sector privado?",sub:""},
+  {dim:"Evaluación",e:"R",id:"ev1",text:"¿Con qué frecuencia evalúas algo que el alumno creó desde cero, donde no existe una solución preestablecida?",sub:""},
+  {dim:"Evaluación",e:"R",id:"ev2",text:"¿Con qué frecuencia pides al alumno que explique cómo cambió su comprensión de un tema a lo largo del semestre?",sub:""},
+  {dim:"Evaluación",e:"C",id:"ev3",text:"¿Con qué frecuencia das retroalimentación detallada —no solo una calificación— sobre el razonamiento del alumno?",sub:""},
+  {dim:"Evaluación",e:"C",id:"ev4",text:"¿Con qué frecuencia aplicas evaluaciones diagnósticas al inicio de un tema para ajustar lo que vas a enseñar?",sub:""},
+  {dim:"Evaluación",e:"SC",id:"ev5",text:"¿Con qué frecuencia los alumnos se evalúan entre sí con criterios claros que tú estableciste previamente?",sub:""},
+  {dim:"Evaluación",e:"SC",id:"ev6",text:"¿Con qué frecuencia la evaluación incluye una conversación donde el alumno defiende su proceso, no solo su resultado?",sub:""},
+  {dim:"Evaluación",e:"SI",id:"ev7",text:"¿Con qué frecuencia un agente externo (empresa, comunidad, cliente) participa en la evaluación del trabajo del alumno?",sub:""},
+  {dim:"Evaluación",e:"SI",id:"ev8",text:"¿Con qué frecuencia evalúas el proceso del equipo —cómo trabajaron juntos— y no solo el producto final?",sub:""}
+];
+
+const QT2 = [
+  {criterio:"Rol del Docente",desc:"Fomentar que el alumno construya su propia interpretación del conocimiento",CR:1,CC:0,SC:0,SI:0,id:"p1"},
+  {criterio:"Rol del Docente",desc:"Guiar y ajustar la enseñanza al nivel cognitivo del alumno",CR:0,CC:1,SC:0,SI:0,id:"p2"},
+  {criterio:"Rol del Docente",desc:"Retomar saberes previos del alumno como punto de partida",CR:0,CC:1,SC:0,SI:0,id:"p3"},
+  {criterio:"Rol del Docente",desc:"Facilitar interacciones para construir conocimiento colectivo",CR:0,CC:0,SC:1,SI:1,id:"p4"},
+  {criterio:"Rol del Docente",desc:"Promover autonomía intelectual y decisión propia del alumno",CR:1,CC:1,SC:0,SI:0,id:"p5"},
+  {criterio:"Rol del Docente",desc:"Conectar el aprendizaje con problemas reales de la disciplina económica",CR:0,CC:0,SC:1,SI:1,id:"p6"},
+  {criterio:"Rol del Estudiante",desc:"Que el alumno construya activamente su conocimiento",CR:1,CC:1,SC:0,SI:0,id:"p7"},
+  {criterio:"Rol del Estudiante",desc:"Que el alumno reflexione sobre su propio proceso de aprendizaje",CR:0,CC:1,SC:0,SI:0,id:"p8"},
+  {criterio:"Rol del Estudiante",desc:"Que el alumno colabore para co-construir saberes con otros",CR:0,CC:0,SC:1,SI:1,id:"p9"},
+  {criterio:"Rol del Estudiante",desc:"Que el alumno investigue, argumente y justifique sus decisiones",CR:1,CC:1,SC:0,SI:0,id:"p10"},
+  {criterio:"Rol del Estudiante",desc:"Que el alumno aplique pensamiento crítico propio",CR:1,CC:0,SC:0,SI:0,id:"p11"},
+  {criterio:"Rol del Estudiante",desc:"Que el alumno use experiencias auténticas como base de aprendizaje",CR:0,CC:0,SC:1,SI:1,id:"p12"},
+  {criterio:"Metodologías",desc:"Resolver casos y problemas reales del entorno económico",CR:0,CC:0,SC:1,SI:1,id:"p13"},
+  {criterio:"Metodologías",desc:"Promover debate y reflexión crítica colectiva",CR:0,CC:0,SC:0,SI:1,id:"p14"},
+  {criterio:"Metodologías",desc:"Explorar y descubrir conceptos mediante problemas guiados",CR:0,CC:1,SC:0,SI:0,id:"p15"},
+  {criterio:"Metodologías",desc:"Aprendizaje colaborativo y trabajo en equipo real",CR:0,CC:0,SC:1,SI:1,id:"p16"},
+  {criterio:"Metodologías",desc:"Prácticas situadas en entornos reales (empresa, institución, campo)",CR:0,CC:0,SC:1,SI:0,id:"p17"},
+  {criterio:"Metodologías",desc:"Fomentar autodirección y estudio independiente del alumno",CR:1,CC:1,SC:0,SI:0,id:"p18"},
+  {criterio:"Evaluación",desc:"Evaluar procesos cognitivos además del producto final",CR:0,CC:1,SC:0,SI:0,id:"p19"},
+  {criterio:"Evaluación",desc:"Autoevaluación reflexiva del alumno",CR:1,CC:1,SC:0,SI:0,id:"p20"},
+  {criterio:"Evaluación",desc:"Coevaluación entre pares con criterios definidos",CR:0,CC:0,SC:0,SI:1,id:"p21"},
+  {criterio:"Evaluación",desc:"Considerar contexto y evidencias del proceso de aprendizaje",CR:0,CC:0,SC:1,SI:0,id:"p22"},
+  {criterio:"Evaluación",desc:"Uso de rúbricas y portafolios de evidencias",CR:0,CC:1,SC:0,SI:0,id:"p23"},
+  {criterio:"Evaluación",desc:"Evaluar la aplicación auténtica del conocimiento en contextos reales",CR:0,CC:0,SC:1,SI:1,id:"p24"},
+  {criterio:"Evaluación",desc:"Retroalimentación formativa continua al alumno",CR:0,CC:1,SC:0,SI:1,id:"p25"}
+];
+
+const NAMES = {R:"Radical",C:"Cognitivo",SC:"Sociocultural",SI:"Social"};
+const COLORS = {R:"#534AB7",C:"#185FA5",SC:"#0F6E56",SI:"#BA7517"};
+const TAG_CLASS = {R:"tag-R",C:"tag-C",SC:"tag-SC",SI:"tag-SI"};
+
+const v1 = {}, v2 = {};
+QT1.forEach(q => v1[q.id] = 5);
+QT2.forEach(q => v2[q.id] = 5);
+
+function buildT1() {
+  const sections = {};
+  QT1.forEach(q => { if(!sections[q.dim]) sections[q.dim] = []; sections[q.dim].push(q); });
+  const dimIds = {"Rol del docente":"q-docente","Rol del estudiante":"q-estudiante","Metodologías didácticas":"q-metodo","Evaluación":"q-eval"};
+  Object.keys(dimIds).forEach(dim => {
+    const el = document.getElementById(dimIds[dim]);
+    if(!el) return;
+    el.innerHTML = `<div class="section-label">${dim}</div>`;
+    (sections[dim]||[]).forEach(q => {
+      el.innerHTML += `<div class="card">
+        <span class="tag ${TAG_CLASS[q.e]}">${NAMES[q.e]}</span>
+        <div class="q-text">${q.text}</div>
+        ${q.sub?`<div class="q-sub">${q.sub}</div>`:''}
+        <div class="scale-row">
+          <span class="scale-lbl">0 · Nunca</span>
+          <input type="range" min="0" max="10" step="1" value="5" oninput="upT1('${q.id}',this.value)">
+          <span class="scale-num" id="v${q.id}">5</span>
+          <span class="scale-lbl">Siempre · 10</span>
+        </div>
+      </div>`;
+    });
+  });
+}
+
+function buildT2() {
+  const el = document.getElementById('q-pertinencia');
+  let lastC = '';
+  QT2.forEach(q => {
+    if(q.criterio !== lastC) {
+      el.innerHTML += `<div class="section-label">${q.criterio}</div>`;
+      lastC = q.criterio;
+    }
+    const tags = ['CR','CC','SC','SI'].filter(k=>q[{CR:'CR',CC:'CC',SC:'SC',SI:'SI'}[k]]).map(k => {
+      const map = {CR:'R',CC:'C',SC:'SC',SI:'SI'};
+      return `<span class="tag ${TAG_CLASS[map[k]]}">${NAMES[map[k]]}</span>`;
+    });
+    const tagsCorrected = [];
+    if(q.CR) tagsCorrected.push(`<span class="tag ${TAG_CLASS['R']}">${NAMES['R']}</span>`);
+    if(q.CC) tagsCorrected.push(`<span class="tag ${TAG_CLASS['C']}">${NAMES['C']}</span>`);
+    if(q.SC) tagsCorrected.push(`<span class="tag ${TAG_CLASS['SC']}">${NAMES['SC']}</span>`);
+    if(q.SI) tagsCorrected.push(`<span class="tag ${TAG_CLASS['SI']}">${NAMES['SI']}</span>`);
+    el.innerHTML += `<div class="card">
+      <div style="margin-bottom:8px;">${tagsCorrected.join(' ')}</div>
+      <div class="q-text">¿Qué tan pertinente sería que en tu materia los alumnos: <strong>${q.desc}</strong>?</div>
+      <div class="q-sub">Responde pensando en lo que debería ocurrir, dado el perfil de tus alumnos y los objetivos de la carrera.</div>
+      <div class="scale-row">
+        <span class="scale-lbl">0 · Nada</span>
+        <input type="range" min="0" max="10" step="1" value="5" oninput="upT2('${q.id}',this.value)">
+        <span class="scale-num" id="vp${q.id}">5</span>
+        <span class="scale-lbl">Totalmente · 10</span>
+      </div>
+    </div>`;
+  });
+}
+
+function upT1(id, val) {
+  v1[id] = parseInt(val);
+  document.getElementById('v'+id).textContent = val;
+  updateProgress();
+}
+function upT2(id, val) {
+  v2[id] = parseInt(val);
+  document.getElementById('vp'+id).textContent = val;
+  updateProgress();
+}
+
+function updateProgress() {
+  const touched = Object.keys(v1).filter(k=>v1[k]!==5).length + Object.keys(v2).filter(k=>v2[k]!==5).length;
+  const total = QT1.length + QT2.length;
+  document.getElementById('progress').style.width = Math.min(100, Math.round(touched/total*100)) + '%';
+}
+
+function calcT1() {
+  const acc = {R:[],C:[],SC:[],SI:[]};
+  QT1.forEach(q => acc[q.e].push(v1[q.id]));
+  const out = {};
+  Object.keys(acc).forEach(e => { out[e] = Math.round(acc[e].reduce((a,b)=>a+b,0)/acc[e].length*10)/10; });
+  return out;
+}
+
+function calcT2() {
+  const acc = {R:{s:0,n:0},C:{s:0,n:0},SC:{s:0,n:0},SI:{s:0,n:0}};
+  QT2.forEach(q => {
+    const val = v2[q.id];
+    if(q.CR){acc.R.s+=val;acc.R.n++;}
+    if(q.CC){acc.C.s+=val;acc.C.n++;}
+    if(q.SC){acc.SC.s+=val;acc.SC.n++;}
+    if(q.SI){acc.SI.s+=val;acc.SI.n++;}
+  });
+  const out = {};
+  Object.keys(acc).forEach(e=>{ out[e]=acc[e].n>0?Math.round(acc[e].s/acc[e].n*10)/10:0; });
+  return out;
+}
+
+function renderResults() {
+  const t1 = calcT1(), t2 = calcT2();
+  const winner1 = Object.keys(t1).sort((a,b)=>t1[b]-t1[a])[0];
+  const winner2 = Object.keys(t2).sort((a,b)=>t2[b]-t2[a])[0];
+
+  document.getElementById('r1').innerHTML = Object.keys(t1).map(e =>
+    `<div class="r-row">
+      <span class="r-name">${NAMES[e]}</span>
+      <div class="r-bar-wrap"><div class="r-bar" style="width:${t1[e]/10*100}%;background:${COLORS[e]};"></div></div>
+      <span class="r-score">${t1[e]}</span>
+    </div>`
+  ).join('') + `<span class="winner-badge" style="background:${COLORS[winner1]}22;color:${COLORS[winner1]};">Predominante: ${NAMES[winner1]}</span>`;
+
+  document.getElementById('r2').innerHTML = Object.keys(t2).map(e =>
+    `<div class="r-row">
+      <span class="r-name">${NAMES[e]}</span>
+      <div class="r-bar-wrap"><div class="r-bar" style="width:${t2[e]/10*100}%;background:${COLORS[e]};"></div></div>
+      <span class="r-score">${t2[e]}</span>
+    </div>`
+  ).join('') + `<span class="winner-badge" style="background:${COLORS[winner2]}22;color:${COLORS[winner2]};">Más pertinente: ${NAMES[winner2]}</span>`;
+
+  document.getElementById('output').textContent =
+`══════════════════════════════════════
+RESULTADOS — Academia de Economía FECA-UJED
+(Generado: ${new Date().toLocaleDateString('es-MX', {day:'2-digit',month:'long',year:'numeric'})})
+══════════════════════════════════════
+
+TABLA 1 · Enfoque predominante en práctica actual
+  Radical         ${t1.R}
+  Cognitivo       ${t1.C}
+  Sociocultural   ${t1.SC}
+  Social          ${t1.SI}
+  → Enfoque dominante: ${NAMES[winner1]}
+
+TABLA 2 · Pertinencia de enfoques
+  Radical         ${t2.R}
+  Cognitivo       ${t2.C}
+  Sociocultural   ${t2.SC}
+  Social          ${t2.SI}
+  → Más pertinente: ${NAMES[winner2]}
+
+Para capturar en Excel (hoja Evaluación):
+  Actualidad Radical:        ${t1.R}
+  Actualidad Cognitivo:      ${t1.C}
+  Actualidad Sociocultural:  ${t1.SC}
+  Actualidad Social:         ${t1.SI}
+  Pertinencia Radical:       ${t2.R}
+  Pertinencia Cognitivo:     ${t2.C}
+  Pertinencia Sociocultural: ${t2.SC}
+  Pertinencia Social:        ${t2.SI}
+══════════════════════════════════════`;
+}
+
+function showTab(id, btn) {
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(b=>b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  btn.classList.add('active');
+  if(id==='res') renderResults();
+}
+
+function copyOut(btn) {
+  navigator.clipboard.writeText(document.getElementById('output').textContent).catch(()=>{});
+  btn.textContent = '¡Copiado!';
+  setTimeout(()=>btn.textContent='Copiar resultados', 2000);
+}
+
+buildT1();
+buildT2();
+</script>
+</body>
+</html>
